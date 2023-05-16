@@ -1,3 +1,49 @@
-header{
-  padding-top: 0.25rem !important;
+.text-center{
+  text-align: center;
+}
+
+.grid.current-weather-info{
+  justify-items: center;
+  gap: 100px;
+  margin-bottom: 1rem;
+}
+
+.current-weather-temperature{
+  font-size: 4rem;
+}
+
+.grid.current-weather-temperature-range{
+  grid-template-columns: 1fr 1fr;
+}
+
+.hourly-forecast{
+  display: flex;
+  gap: 100px;
+  padding: 0 100px;
+}
+
+.hourly-forecast-card{
+  flex: 0 0 230px;
+}
+
+.grid.weather-forecast-info{
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  align-items: center;
+}
+
+@media (min-width:500px) {
+  header > div{
+    grid-template-columns: 5fr 1fr 1fr !important;
+  }
+}
+
+@media (max-width:800px) {
+  .collapse{
+    display: none;
+  }
+
+  .grid.weather-forecast-info{
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+  }
 }
