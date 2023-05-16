@@ -1,64 +1,218 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
+
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="favicon.svg" type="image/x-icon">
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="favicon.svg" type="image/x-icon" />
   <script src="./main.js" defer></script>
   <title>Weather forecast</title>
 </head>
+
 <body>
-  <header class="container-fluid">
-    <nav>
-      <ul>
-        <li class="logo"><strong>Weather app</strong></li>
-        <li>
-          <img src="" alt="">
-          Weather in <strong>Konotop</strong> / Sumy region
-        </li>
-        <li><strong>°C</strong> | °F</li>
-      </ul>
-      <ul>
-        <li>MENU</li>
-      </ul>
-    </nav>
+  <!-- Add an background image based on the city being searched -->
+  <header class="container">
+    <div class="grid">
+      <input type="search" placeholder="Location" />
+      <button>°C</button>
+      <button class="outline">°F</button>
+    </div>
   </header>
-  <main class="container">
-    <section class="grid">
-      <div>
-        <img src="" alt="">
-        <p>Sunrise: <span>20:00</span></p>
-        <p>Sunset: <span>21:00</span></p>
+  <main class="container-fluid text-center">
+    <section class="current-weather container">
+      <div class="current-weather-info grid">
+        <div>
+          <hgroup>
+            <h2>Moscow</h2>
+            <h3>Overcast</h3>
+          </hgroup>
+          <div class="current-weather-temperature">8°C</div>
+          <div class="current-weather-temperature-range grid">
+            <div>H: <span>5</span>°</div>
+            <div>L: <span>2</span>°</div>
+          </div>
+        </div>
+        <img src="./cloudy.png" alt="" />
       </div>
-      <div>
-        <h5>Friday 27 July 15:00</h5>
-        <p><span>+22</span>°C</p>
-        <p><strong>Feels like <span>23</span>°</strong></p>
-        <p>The whole day will be cloudy. No precipitation.</p>
-      </div>
-      <div>
-        <p><strong>MORE DETAILS:</strong></p>
-        <p>Wind speed: <strong><span>1-8 m/s</span></strong></p>
-        <p>Air humidity: <strong><span>42-76%</span></strong></p>
-        <p>Pressure: <strong><span>747-749mm</span></strong></p>
-        <p>Precipitation probability <strong><span>2%</span></strong></p>
-      </div>
-      <div></div>
+
+      <p>Few clouds. Small chance of rain.</p>
     </section>
-    <hr>
-    <section>
-      <div>
-        <hgroup>
-          <h6>Monday</h6>
-          <p>24 July</p>
-        </hgroup>
-        <p>min <strong><span>+15</span>°</strong></p>
-        <p>max <strong><span>+22</span>°</strong></p>
-        <img src="" alt="">
-        <p>Cloudy</p>
+    <section class="current-hourly-forecast">
+      <figure class="hourly-forecast">
+        <article class="hourly-forecast-card">
+          <header>Now</header>
+          <img src="./cloudy.png" alt="" />
+          <h3>5°</h3>
+        </article>
+        <article class="hourly-forecast-card">
+          <header>Now</header>
+          <img src="./cloudy.png" alt="" />
+          <h3>5°</h3>
+        </article>
+        <article class="hourly-forecast-card">
+          <header>Now</header>
+          <img src="./cloudy.png" alt="" />
+          <h3>5°</h3>
+        </article>
+        <article class="hourly-forecast-card">
+          <header>Now</header>
+          <img src="./cloudy.png" alt="" />
+          <h3>5°</h3>
+        </article>
+        <article class="hourly-forecast-card">
+          <header>Now</header>
+          <img src="./cloudy.png" alt="" />
+          <h3>5°</h3>
+        </article>
+        <article class="hourly-forecast-card">
+          <header>Now</header>
+          <img src="./cloudy.png" alt="" />
+          <h3>5°</h3>
+        </article>
+        <article class="hourly-forecast-card">
+          <header>Now</header>
+          <img src="./cloudy.png" alt="" />
+          <h3>5°</h3>
+        </article>
+        <article class="hourly-forecast-card">
+          <header>Now</header>
+          <img src="./cloudy.png" alt="" />
+          <h3>5°</h3>
+        </article>
+        <article class="hourly-forecast-card">
+          <header>Now</header>
+          <img src="./cloudy.png" alt="" />
+          <h3>5°</h3>
+        </article>
+        <article class="hourly-forecast-card">
+          <header>Now</header>
+          <img src="./cloudy.png" alt="" />
+          <h3>5°</h3>
+        </article>
+        <article class="hourly-forecast-card">
+          <header>Now</header>
+          <img src="./cloudy.png" alt="" />
+          <h3>5°</h3>
+        </article>
+        <article class="hourly-forecast-card">
+          <header>Now</header>
+          <img src="./cloudy.png" alt="" />
+          <h3>5°</h3>
+        </article>
+      </figure>
+    </section>
+    <section class="current-weather-details container">
+      <!--
+        try to replace words with images
+        add slightly different background
+      -->
+      <div class="grid">
+        <ul>
+          <li>
+            <small>SUNRISE</small>
+            <h5>07:05</h5>
+          </li>
+          <li>
+            <small>SUNSET</small>
+            <h5>22:05</h5>
+          </li>
+          <li>
+            <small class=>CHANCE OF RAIN</small>
+            <h5>0%</h5>
+          </li>
+          <li>
+            <small>HUMIDITY</small>
+            <h5>85%</h5>
+          </li>
+          <li>
+            <small>WIND</small>
+            <h5>nw 2 km/hr</h5>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <small>FEELS LIKE</small>
+            <h5>7°</h5>
+          </li>
+          <li>
+            <small>PRECIPITATION</small>
+            <h5>0.12 cm</h5>
+          </li>
+          <li>
+            <small>PRESSURE</small>
+            <h5>1022 hPa</h5>
+          </li>
+          <li>
+            <small>VISIBILITY</small>
+            <h5>100 km</h5>
+          </li>
+          <li>
+            <small>UV INDEX</small>
+            <h5>0</h5>
+          </li>
+        </ul>
+      </div>
+    </section>
+    <section class="weather-forecast container">
+      <div class="weather-forecast-info grid">
+        <div>DAY</div>
+        <div></div>
+        <div class="collapse">CHANCE OF RAIN</div>
+        <div class="collapse">HUMIDITY</div>
+        <div>TEMPERATURE</div>
+      </div>
+      <div class="weather-forecast-info grid">
+        <div>Wednesday</div>
+        <div><img src="./cloudy.png" alt="" width="100px"></div>
+        <div class="collapse">42%</div>
+        <div class="collapse">56%</div>
+        <div>8°/16°</div>
+      </div>
+      <div class="weather-forecast-info grid">
+        <div>Wednesday</div>
+        <div><img src="./cloudy.png" alt="" width="100px"></div>
+        <div class="collapse">42%</div>
+        <div class="collapse">56%</div>
+        <div>8°/16°</div>
+      </div>
+      <div class="weather-forecast-info grid">
+        <div>Wednesday</div>
+        <div><img src="./cloudy.png" alt="" width="100px"></div>
+        <div class="collapse">42%</div>
+        <div class="collapse">56%</div>
+        <div>8°/16°</div>
+      </div>
+      <div class="weather-forecast-info grid">
+        <div>Wednesday</div>
+        <div><img src="./cloudy.png" alt="" width="100px"></div>
+        <div class="collapse">42%</div>
+        <div class="collapse">56%</div>
+        <div>8°/16°</div>
+      </div>
+      <div class="weather-forecast-info grid">
+        <div>Wednesday</div>
+        <div><img src="./cloudy.png" alt="" width="100px"></div>
+        <div class="collapse">42%</div>
+        <div class="collapse">56%</div>
+        <div>8°/16°</div>
+      </div>
+      <div class="weather-forecast-info grid">
+        <div>Wednesday</div>
+        <div><img src="./cloudy.png" alt="" width="100px"></div>
+        <div class="collapse">42%</div>
+        <div class="collapse">56%</div>
+        <div>8°/16°</div>
+      </div>
+      <div class="weather-forecast-info grid">
+        <div>Wednesday</div>
+        <div><img src="./cloudy.png" alt="" width="100px"></div>
+        <div class="collapse">42%</div>
+        <div class="collapse">56%</div>
+        <div>8°/16°</div>
       </div>
     </section>
   </main>
 </body>
+
 </html>
