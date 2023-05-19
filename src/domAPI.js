@@ -12,17 +12,10 @@ function hourlyForecastSliderControls() {
     if (carouselContainer.clientWidth > carousel.clientWidth) {
       return; // No need to continue if the carousel container is bigger than the carousel
     }
-    if (isMobileDevice()) {
-      startX = event.touches[0].clientX;
-      document.addEventListener("touchmove", handleMove);
-      document.addEventListener("touchend", handleEnd);
-    } else {
-      startX = event.clientX;
-      document.addEventListener("mousemove", handleMove);
-      document.addEventListener("mouseup", handleEnd);
-    }
+    startX = isMobileDevice() ? event.touches[0].clientX : event.clientX;
+    document.addEventListener(isMobileDevice() ? "touchmove" : "mousemove", handleMove);
+    document.addEventListener(isMobileDevice() ? "touchend" : "mouseup", handleEnd);
   }
-
 
   function handleMove(event) {
     const clientX = isMobileDevice() ? event.touches[0].clientX : event.clientX;
@@ -30,26 +23,18 @@ function hourlyForecastSliderControls() {
     futureCarouselPosition = currentCarouselPosition + deltaX;
 
     const maxPosition = carouselContainer.clientWidth - carousel.clientWidth - 2;
-    if (futureCarouselPosition > 0) {
-      futureCarouselPosition = 0;
-    } else if (futureCarouselPosition < maxPosition) {
-      futureCarouselPosition = maxPosition;
-    }
+    futureCarouselPosition = Math.max(Math.min(futureCarouselPosition, 0), maxPosition);
 
     carousel.style.transform = `translateX(${futureCarouselPosition}px)`;
   }
 
   function handleEnd() {
-    currentCarouselPosition = futureCarouselPosition
-    if (isMobileDevice()) {
-      document.removeEventListener("touchmove", handleMove);
-    } else {
-      document.removeEventListener("mousemove", handleMove);
-    }
+    currentCarouselPosition = futureCarouselPosition;
+    document.removeEventListener(isMobileDevice() ? "touchmove" : "mousemove", handleMove);
+    document.removeEventListener(isMobileDevice() ? "touchend" : "mouseup", handleEnd);
   }
 
-  carouselContainer.addEventListener("mousedown", handleStart);
-  carouselContainer.addEventListener("touchstart", handleStart);
+  carouselContainer.addEventListener(isMobileDevice() ? "touchstart" : "mousedown", handleStart);
 }
 
 function init() {
