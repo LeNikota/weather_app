@@ -16,6 +16,11 @@
   grid-template-columns: 1fr 1fr;
 }
 
+.current-weather-details{
+  display: grid;
+  grid-template-columns: repeat(5,1fr);
+}
+
 .hourly-forecast{
   overflow: hidden;
   user-select: none;
@@ -30,7 +35,6 @@
   display: inline-flex;
   gap: 100px;
 }
-
 
 .hourly-forecast-card{
   width: 200px;
