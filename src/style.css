@@ -17,13 +17,23 @@
 }
 
 .hourly-forecast{
-  display: flex;
-  gap: 100px;
-  padding: 0 100px;
+  overflow: hidden;
+  user-select: none;
+  cursor: grab;
 }
 
+.hourly-forecast:active{
+  cursor: grabbing;
+}
+
+.hourly-forecast-carousel{
+  display: inline-flex;
+  gap: 100px;
+}
+
+
 .hourly-forecast-card{
-  flex: 0 0 230px;
+  width: 200px;
 }
 
 .grid.weather-forecast-info{
