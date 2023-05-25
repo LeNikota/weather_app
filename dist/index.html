@@ -23,19 +23,18 @@
         <div class="current-weather-info grid">
           <div>
             <hgroup>
-              <h2>Moscow</h2>
-              <h3>Overcast</h3>
+              <h2 class="current-weather-info__city"></h2>
+              <h3 class="current-weather-info__condition"></h3>
             </hgroup>
-            <div class="current-weather-temperature">8°C</div>
-            <div class="current-weather-temperature-range grid">
-              <div>H: <span>5</span>°</div>
-              <div>L: <span>2</span>°</div>
+            <div class="current-weather-info-temperature"></div>
+            <div class="current-weather-info-temperature-range grid">
+              <div class="current-weather-info-temperature-range__high"></div>
+              <div class="current-weather-info-temperature-range__low"></div>
             </div>
           </div>
-          <img src="./cloudy.png" alt="" />
+          <img class="current-weather-info__img" src="" alt="" />
         </div>
 
-        <p>Few clouds. Small chance of rain.</p>
       </section>
       <section class="current-hourly-forecast">
         <figure class="hourly-forecast">

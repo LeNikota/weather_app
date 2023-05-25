@@ -4,16 +4,21 @@
 
 .grid.current-weather-info{
   justify-items: center;
+  align-items: center;
   gap: 100px;
   margin-bottom: 1rem;
 }
 
-.current-weather-temperature{
+.current-weather-info__img{
+  width: 8rem;
+}
+
+.current-weather-info-temperature{
   font-size: 4rem;
 }
 
-.grid.current-weather-temperature-range{
-  grid-template-columns: 1fr 1fr;
+.grid.current-weather-info-temperature-range{
+  grid-template-columns: 1fr 1fr !important;
 }
 
 .current-weather-details{
@@ -38,6 +43,10 @@
 
 .hourly-forecast-card{
   width: 200px;
+}
+
+.hourly-forecast-card img{
+  -webkit-user-drag: none;
 }
 
 .grid.weather-forecast-info{

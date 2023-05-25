@@ -1,9 +1,10 @@
-import isMobileDevice from './utility';
+import * as utility from './utility';
 
 function hourlyForecastSliderControls() {
   const carouselContainer = document.querySelector(".hourly-forecast");
   const carousel = carouselContainer.querySelector(".hourly-forecast-carousel");
 
+  const isMobile = utility.isMobileDevice();
   let startX = null;
   let currentCarouselPosition = 0;
   let futureCarouselPosition = 0;
@@ -12,13 +13,13 @@ function hourlyForecastSliderControls() {
     if (carouselContainer.clientWidth > carousel.clientWidth) {
       return; // No need to continue if the carousel container is bigger than the carousel
     }
-    startX = isMobileDevice() ? event.touches[0].clientX : event.clientX;
-    document.addEventListener(isMobileDevice() ? "touchmove" : "mousemove", handleMove);
-    document.addEventListener(isMobileDevice() ? "touchend" : "mouseup", handleEnd);
+    startX = isMobile ? event.touches[0].clientX : event.clientX;
+    document.addEventListener(isMobile ? "touchmove" : "mousemove", handleMove);
+    document.addEventListener(isMobile ? "touchend" : "mouseup", handleEnd);
   }
 
   function handleMove(event) {
-    const clientX = isMobileDevice() ? event.touches[0].clientX : event.clientX;
+    const clientX = isMobile ? event.touches[0].clientX : event.clientX;
     const deltaX = clientX - startX;
     futureCarouselPosition = currentCarouselPosition + deltaX;
 
@@ -30,15 +31,31 @@ function hourlyForecastSliderControls() {
 
   function handleEnd() {
     currentCarouselPosition = futureCarouselPosition;
-    document.removeEventListener(isMobileDevice() ? "touchmove" : "mousemove", handleMove);
-    document.removeEventListener(isMobileDevice() ? "touchend" : "mouseup", handleEnd);
+    document.removeEventListener(isMobile ? "touchmove" : "mousemove", handleMove);
+    document.removeEventListener(isMobile ? "touchend" : "mouseup", handleEnd);
   }
 
-  carouselContainer.addEventListener(isMobileDevice() ? "touchstart" : "mousedown", handleStart);
+  carouselContainer.addEventListener(isMobile ? "touchstart" : "mousedown", handleStart);
+}
+
+function displayCurrentWeather(data, units) {
+  const city = document.querySelector('.current-weather-info__city')
+  const temperature = document.querySelector('.current-weather-info-temperature')
+  const condition = document.querySelector('.current-weather-info__condition')
+  const high = document.querySelector('.current-weather-info-temperature-range__high')
+  const low = document.querySelector('.current-weather-info-temperature-range__low')
+  const img = document.querySelector('.current-weather-info__img')
+
+  city.textContent = data.location.name;
+  temperature.textContent = `${data.current.temp_c} ${units}`;
+  condition.textContent = data.current.condition.text;
+  high.textContent = `H: ${data.forecast.forecastday[0].day.maxtemp_c}°`;
+  low.textContent = `L: ${data.forecast.forecastday[0].day.mintemp_c}°`;
+  img.src = utility.resolveIconPath(data.current.condition.icon);
 }
 
 function init() {
   hourlyForecastSliderControls();
 }
 
-export { init };
+export { init, displayCurrentWeather };
