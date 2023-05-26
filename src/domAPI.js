@@ -51,8 +51,8 @@ function displayCurrentWeather(data, units) {
   condition.textContent = data.current.condition.text;
   high.textContent = `H: ${data.forecast.forecastday[0].day.maxtemp_c}°`;
   low.textContent = `L: ${data.forecast.forecastday[0].day.mintemp_c}°`;
-  // img.src = utility.resolveIconPath(data.current.condition.icon);
-  //change the way image is resolved
+  console.log(utility.resolveIconPath(data.current.condition.icon));
+  img.src = utility.resolveIconPath(data.current.condition.icon);
 }
 
 function init() {
