@@ -22,51 +22,41 @@ function isMobileDevice() {
 }
 
 function resolveIconPath(path) {
-  const timeOfTheDay = path.match(/night|day/)[0]
-  const weatherID = path.match(/\d+.png$/)[0]
-  if(385 < weatherID || weatherID == 200){
+  const timeOfTheDay = path.includes("night") ? "night" : "day";
+  const weatherID = parseInt(path.match(/\d+(?=\.png$)/)[0]);
+
+  if ([200, 386, 389].includes(weatherID)) {
     return thunderstorm;
   }
-  if (
-    (361 < weatherID  && weatherID < 378) ||
-    (316 < weatherID && weatherID < 351) ||
-    (226 < weatherID && weatherID < 231) ||
-    (178 < weatherID && weatherID < 183)
-  ) {
+
+  if ([179, 182, 227, 230, 386, 392, 395].includes(weatherID) || (361 < weatherID && weatherID < 378) || (316 < weatherID && weatherID < 351)) {
     return snow;
   }
-  if(247 < weatherID && weatherID < 261 || weatherID == 143){
+
+  if ([143, 185, 248, 260, 281, 284, 314].includes(weatherID)) {
     return mist;
   }
-  if(weatherID == 122){
-    return cloudy;
-  }
-  if(weatherID == 119){
-    return broken_clouds;
-  }
-  if(weatherID == 263 || weatherID == 266 || weatherID == 296 || weatherID == 302 || weatherID == 308){
+
+  if (weatherID === 119) return broken_clouds;
+  
+  if (weatherID === 122) return cloudy;
+
+  if ([263, 266, 296, 302, 308].includes(weatherID)) {
     return shower_rain;
   }
-  if(timeOfTheDay === 'day'){
-    if (weatherID == 113) {
-      return clear_sky_day;
-    }
-    if(weatherID == 116) {
-      return few_clouds_day;
-    } else {
-      return rain_day
-    }
-  } else { 
-    if (weatherID == 113) {
-      return clear_sky_day;
-    }
-    if(weatherID == 116) {
-      return few_clouds_day;
-    } else {
-      return rain_day
-    }
+
+  if (timeOfTheDay === "day") {
+    if (weatherID === 113) return clear_sky_day;
+    if (weatherID === 116) return few_clouds_day;
+    return rain_day;
   }
+
+  if (weatherID === 113) return clear_sky_night;
+  if (weatherID === 116) return few_clouds_night;
+  return rain_night;
 }
+
+
 
 export {
   isMobileDevice,
