@@ -6,10 +6,10 @@ import * as domAPI from './domAPI'
 
 domAPI.init();
 
-(async () => console.log(await weatherAPI.fetchForecastData('yaroslavl')))();
-
-
 async function test() {
-  domAPI.displayCurrentWeather(await weatherAPI.fetchForecastData('yaroslavl'),'°C');
+  const data = await weatherAPI.fetchForecastData('yaroslavl');
+  console.log(data);
+  domAPI.renderWeatherDOM(data,'°C');
 }
+
 test()

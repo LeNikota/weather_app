@@ -51,12 +51,74 @@ function displayCurrentWeather(data, units) {
   condition.textContent = data.current.condition.text;
   high.textContent = `H: ${data.forecast.forecastday[0].day.maxtemp_c}°`;
   low.textContent = `L: ${data.forecast.forecastday[0].day.mintemp_c}°`;
-  console.log(utility.resolveIconPath(data.current.condition.icon));
   img.src = utility.resolveIconPath(data.current.condition.icon);
+}
+
+function displayCurrentWeatherHourlyForecast(data, units) {
+  const container = document.querySelector('.hourly-forecast-carousel');
+
+  data.forecast.forecastday[0].hour.forEach(hour => {
+    const card = document.createElement('article');
+    card.classList.add('hourly-forecast-card');
+
+    const header = document.createElement('header');
+    const hgroup = document.createElement('hgroup');
+
+    const time = document.createElement('h3');
+    time.textContent = hour.time.match(/\d+:\d+/)[0];
+    hgroup.appendChild(time);
+
+    const condition = document.createElement('h4');
+    condition.textContent = hour.condition.text;
+    hgroup.appendChild(condition);
+
+    header.appendChild(hgroup);
+    card.appendChild(header);
+
+    const image = document.createElement('img');
+    image.src = utility.resolveIconPath(hour.condition.icon);
+    card.appendChild(image);
+
+    const temperature = document.createElement('h3');
+    temperature.textContent = `${hour.temp_c}${units}`;
+    card.appendChild(temperature);
+
+    container.appendChild(card);
+  });
+}
+
+function displayCurrentWeatherDetails(data, units) {
+  const sunrise = document.querySelector('.current-weather-details__sunrise');
+  const sunset = document.querySelector('.current-weather-details__sunset');
+  const chanceOfRain = document.querySelector('.current-weather-details__chance-of-rain');
+  const humidity = document.querySelector('.current-weather-details__humidity');
+  const wind = document.querySelector('.current-weather-details__wind');
+  const feelsLike = document.querySelector('.current-weather-details__feels-like');
+  const precipitation = document.querySelector('.current-weather-details__precipitation');
+  const pressure = document.querySelector('.current-weather-details__pressure');
+  const visibility = document.querySelector('.current-weather-details__visibility');
+  const uvIndex = document.querySelector('.current-weather-details__uv-index');
+
+  sunrise.textContent = utility.convert12to24(data.forecast.forecastday[0].astro.sunrise);
+  sunset.textContent = utility.convert12to24(data.forecast.forecastday[0].astro.sunset);
+  chanceOfRain.textContent = `${data.forecast.forecastday[0].day.daily_chance_of_rain}%`;
+  humidity.textContent = `${data.current.humidity}%`;
+  wind.textContent = `${data.current.wind_dir} ${data.current.wind_kph} km/h`;
+  feelsLike.textContent = `${data.current.feelslike_c} ${units}`;
+  precipitation.textContent = `${data.forecast.forecastday[0].day.totalprecip_mm} mm`;
+  pressure.textContent = `${data.current.pressure_mb} mb`;
+  visibility.textContent = `${data.current.vis_km} km`;
+  uvIndex.textContent = `${data.current.uv}`;
+}
+
+function renderWeatherDOM(data, units) {
+  displayCurrentWeather(data, units);
+  displayCurrentWeatherHourlyForecast(data, units);
+  displayCurrentWeatherDetails(data, units)
 }
 
 function init() {
   hourlyForecastSliderControls();
 }
 
-export { init, displayCurrentWeather };
+export { init, renderWeatherDOM, displayCurrentWeather };

@@ -56,9 +56,25 @@ function resolveIconPath(path) {
   return rain_night;
 }
 
+function convert12to24(time12) {
+  const [time, modifier] = time12.split(' ');
+  let [hours, minutes] = time.split(':');
+
+  if (hours === '12') {
+    hours = '00';
+  }
+
+  if (modifier === 'PM') {
+    hours = String(Number(hours) + 12);
+  }
+
+  return `${hours}:${minutes}`;
+}
+
 
 
 export {
   isMobileDevice,
-  resolveIconPath
+  resolveIconPath,
+  convert12to24
 }

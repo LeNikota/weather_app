@@ -49,6 +49,10 @@
   -webkit-user-drag: none;
 }
 
+.hourly-forecast-card hgroup{
+  margin: 0;
+}
+
 .grid.weather-forecast-info{
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   align-items: center;
