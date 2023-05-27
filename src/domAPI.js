@@ -149,7 +149,13 @@ function displayWeatherForecast(data, units) {
   container.appendChild(fragment);
 }
 
+function clearWeatherDOM() {
+  document.querySelector('.hourly-forecast-carousel').innerHTML = '';
+  document.querySelector('.weather-forecast').innerHTML = '';
+}
+
 function renderWeatherDOM(data, units) {
+  clearWeatherDOM();
   displayCurrentWeather(data, units);
   displayCurrentWeatherHourlyForecast(data, units);
   displayCurrentWeatherDetails(data, units);
