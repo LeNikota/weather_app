@@ -113,6 +113,7 @@ function displayCurrentWeatherDetails(data, units) {
 
 function displayWeatherForecast(data, units) {
   const container = document.querySelector('.weather-forecast');
+  const fragment =  document.createDocumentFragment();
 
   data.forecast.forecastday.forEach((day) => {
     const forecastInfo = document.createElement('div');
@@ -141,8 +142,9 @@ function displayWeatherForecast(data, units) {
     forecastInfo.appendChild(collapse2);
     forecastInfo.appendChild(temperature);
 
-    container.appendChild(forecastInfo);
+    fragment.appendChild(forecastInfo);
   });
+  container.appendChild(fragment);
 }
 
 function renderWeatherDOM(data, units) {
