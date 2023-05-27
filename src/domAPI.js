@@ -111,10 +111,15 @@ function displayCurrentWeatherDetails(data, units) {
   uvIndex.textContent = `${data.current.uv}`;
 }
 
+function displayWeatherForecast(data, units) {
+  cons
+}
+
 function renderWeatherDOM(data, units) {
   displayCurrentWeather(data, units);
   displayCurrentWeatherHourlyForecast(data, units);
-  displayCurrentWeatherDetails(data, units)
+  displayCurrentWeatherDetails(data, units);
+  displayWeatherForecast(data, units);
 }
 
 function init() {
