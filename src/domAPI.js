@@ -40,6 +40,7 @@ function hourlyForecastSliderControls() {
 
 function displayCurrentWeather(data, units) {
   const city = document.querySelector('.current-weather-info__city')
+  const location = document.querySelector('.current-weather-info__location')
   const temperature = document.querySelector('.current-weather-info-temperature')
   const condition = document.querySelector('.current-weather-info__condition')
   const high = document.querySelector('.current-weather-info-temperature-range__high')
@@ -47,6 +48,7 @@ function displayCurrentWeather(data, units) {
   const img = document.querySelector('.current-weather-info__img')
 
   city.textContent = data.location.name;
+  location.textContent = data.location.country;
   temperature.textContent = `${data.current.temp_c} ${units}`;
   condition.textContent = data.current.condition.text;
   high.textContent = `H: ${data.forecast.forecastday[0].day.maxtemp_c}°`;

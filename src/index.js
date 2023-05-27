@@ -11,6 +11,7 @@ async function onWeatherSearch(event) {
   if (event.keyCode !== 13) return;
 
   const data = await weatherAPI.fetchForecastData(event.target.value);
+  console.log(data);
   domAPI.renderWeatherDOM(data,'°C');
   event.target.value = '';
 }

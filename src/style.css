@@ -9,6 +9,12 @@
   margin-bottom: 1rem;
 }
 
+.current-weather-info__location{
+  font-weight: normal;
+  font-size: 1rem;
+  display: block;
+}
+
 .current-weather-info__img{
   width: 220px;
 }
