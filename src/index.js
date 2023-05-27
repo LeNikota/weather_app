@@ -4,14 +4,15 @@ import '@picocss/pico'
 import * as weatherAPI from './weatherAPI'
 import * as domAPI from './domAPI'
 
-domAPI.init();
+const searchWeatherInput = document.querySelector('.weather-search-input');
+searchWeatherInput.addEventListener('keydown', onWeatherSearch);
 
+async function onWeatherSearch(event) {
+  if (event.keyCode !== 13) return;
 
-
-async function test() {
-  const data = await weatherAPI.fetchForecastData('yaroslavl');
-  console.log(data);
+  const data = await weatherAPI.fetchForecastData(event.target.value);
   domAPI.renderWeatherDOM(data,'°C');
+  event.target.value = '';
 }
 
-test()
+domAPI.init();
