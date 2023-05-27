@@ -112,7 +112,37 @@ function displayCurrentWeatherDetails(data, units) {
 }
 
 function displayWeatherForecast(data, units) {
-  cons
+  const container = document.querySelector('.weather-forecast');
+
+  data.forecast.forecastday.forEach((day) => {
+    const forecastInfo = document.createElement('div');
+    forecastInfo.className = 'weather-forecast-info grid';
+
+    const dayOfTheWeek = document.createElement('div');
+    dayOfTheWeek.textContent = new Date(day.date).toLocaleDateString('eu-EU',{weekday: 'long'});
+
+    const icon = document.createElement('img');
+    icon.src = utility.resolveIconPath(day.day.condition.icon);
+
+    const collapse1 = document.createElement('div');
+    collapse1.className = 'collapse';
+    collapse1.textContent = `${day.day.daily_chance_of_rain}%`;
+
+    const collapse2 = document.createElement('div');
+    collapse2.className = 'collapse';
+    collapse2.textContent = `${day.day.avghumidity}%`;
+
+    const temperature = document.createElement('div');
+    temperature.textContent = `${day.day.mintemp_c}°/${day.day.maxtemp_c}°`;
+
+    forecastInfo.appendChild(dayOfTheWeek);
+    forecastInfo.appendChild(icon);
+    forecastInfo.appendChild(collapse1);
+    forecastInfo.appendChild(collapse2);
+    forecastInfo.appendChild(temperature);
+
+    container.appendChild(forecastInfo);
+  });
 }
 
 function renderWeatherDOM(data, units) {
@@ -126,4 +156,4 @@ function init() {
   hourlyForecastSliderControls();
 }
 
-export { init, renderWeatherDOM, displayCurrentWeather };
+export { init, renderWeatherDOM };

@@ -58,6 +58,10 @@
   align-items: center;
 }
 
+.weather-forecast-info img{
+  width: 150px;
+}
+
 @media (min-width:500px) {
   header > div{
     grid-template-columns: 5fr 1fr 1fr !important;
