@@ -47,12 +47,16 @@ function displayCurrentWeather(data, units) {
   const low = document.querySelector('.current-weather-info-temperature-range__low')
   const img = document.querySelector('.current-weather-info__img')
 
+  const temperatureValue = (units === '°C') ? data.current.temp_c : data.current.temp_f;
+  const highValue = (units === '°C') ? data.forecast.forecastday[0].day.maxtemp_c : data.forecast.forecastday[0].day.maxtemp_f;
+  const lowValue = (units === '°C') ? data.forecast.forecastday[0].day.mintemp_c : data.forecast.forecastday[0].day.mintemp_f;
+
   city.textContent = data.location.name;
   location.textContent = data.location.country;
-  temperature.textContent = `${data.current.temp_c} ${units}`;
+  temperature.textContent = `${temperatureValue} ${units}`;
   condition.textContent = data.current.condition.text;
-  high.textContent = `H: ${data.forecast.forecastday[0].day.maxtemp_c}°`;
-  low.textContent = `L: ${data.forecast.forecastday[0].day.mintemp_c}°`;
+  high.textContent = `H: ${highValue}°`;
+  low.textContent = `L: ${lowValue}°`;
   img.src = utility.resolveIconPath(data.current.condition.icon);
 }
 
@@ -82,7 +86,8 @@ function displayCurrentWeatherHourlyForecast(data, units) {
     card.appendChild(image);
 
     const temperature = document.createElement('h3');
-    temperature.textContent = `${hour.temp_c}${units}`;
+    const temperatureValue = (units === '°C') ? hour.temp_c: hour.temp_f;
+    temperature.textContent = `${temperatureValue}${units}`;
     card.appendChild(temperature);
 
     container.appendChild(card);
@@ -101,12 +106,14 @@ function displayCurrentWeatherDetails(data, units) {
   const visibility = document.querySelector('.current-weather-details__visibility');
   const uvIndex = document.querySelector('.current-weather-details__uv-index');
 
+  const feelsLikeValue = units === '°C' ? data.current.feelslike_c : data.current.feelslike_f;
+
   sunrise.textContent = utility.convert12to24(data.forecast.forecastday[0].astro.sunrise);
   sunset.textContent = utility.convert12to24(data.forecast.forecastday[0].astro.sunset);
   chanceOfRain.textContent = `${data.forecast.forecastday[0].day.daily_chance_of_rain}%`;
   humidity.textContent = `${data.current.humidity}%`;
   wind.textContent = `${data.current.wind_dir} ${data.current.wind_kph} km/h`;
-  feelsLike.textContent = `${data.current.feelslike_c} ${units}`;
+  feelsLike.textContent = `${feelsLikeValue} ${units}`;
   precipitation.textContent = `${data.forecast.forecastday[0].day.totalprecip_mm} mm`;
   pressure.textContent = `${data.current.pressure_mb} mb`;
   visibility.textContent = `${data.current.vis_km} km`;
@@ -136,7 +143,9 @@ function displayWeatherForecast(data, units) {
     collapse2.textContent = `${day.day.avghumidity}%`;
 
     const temperature = document.createElement('div');
-    temperature.textContent = `${day.day.mintemp_c}°/${day.day.maxtemp_c}°`;
+    const lowValue = (units === '°C') ? day.day.mintemp_c : day.day.mintemp_f
+    const highValue = (units === '°C') ? day.day.maxtemp_c : day.day.maxtemp_f
+    temperature.textContent = `${lowValue}°/${highValue}°`;
 
     forecastInfo.appendChild(dayOfTheWeek);
     forecastInfo.appendChild(icon);
@@ -167,3 +176,54 @@ function init() {
 }
 
 export { init, renderWeatherDOM };
+
+
+
+
+
+
+
+// function displayCurrentWeather(data, units) {
+//   let temperature;
+//   const {
+//     name: cityName,
+//     country: locationCountry
+//   } = data.location;
+  
+//   const {
+//     condition: { text: conditionText },
+//     icon: conditionIcon
+//   } = data.current;
+
+//   if (units === 'C°') {
+//     temperature = data.current.temp_c;
+
+//     const {
+//       maxtemp_c: maxTemperature,
+//       mintemp_c: minTemperature
+//     } = data.forecast.forecastday[0].day;
+//   } else {
+//     temperature = data.current.temp_f;  
+
+//     const {
+//       maxtemp_f: maxTemperature,
+//       mintemp_f: minTemperature
+//     } = data.forecast.forecastday[0].day;
+//   }
+
+//   const city = document.querySelector('.current-weather-info__city')
+//   const location = document.querySelector('.current-weather-info__location')
+//   const temperature = document.querySelector('.current-weather-info-temperature')
+//   const condition = document.querySelector('.current-weather-info__condition')
+//   const high = document.querySelector('.current-weather-info-temperature-range__high')
+//   const low = document.querySelector('.current-weather-info-temperature-range__low')
+//   const img = document.querySelector('.current-weather-info__img')
+
+//   city.textContent = cityName;
+//   location.textContent = locationCountry;
+//   temperature.textContent = `${temperature} ${units}`;
+//   condition.textContent = conditionText;
+//   high.textContent = `H: ${maxTemperature}°`;
+//   low.textContent = `L: ${minTemperature}°`;
+//   img.src = utility.resolveIconPath(conditionIcon);
+// }
