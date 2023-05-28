@@ -6,6 +6,9 @@ import * as domAPI from './domAPI'
 
 let metric = '°C';
 let fetchedWeatherData = null;
+const controller = new AbortController()
+const signal = controller.signal;
+
 const searchWeatherInput = document.querySelector('.weather-search-input');
 const celsiusBtn = document.querySelector('.celsius-button');
 const fahrenheitBtn = document.querySelector('.fahrenheit-button');
@@ -16,17 +19,27 @@ celsiusBtn.addEventListener('click', changeMetric);
 fahrenheitBtn.addEventListener('click', changeMetric);
 
 async function onDOMLoaded() {
-  const ip = await weatherAPI.fetchIPAddress();
-  fetchedWeatherData = await weatherAPI.fetchForecastData(ip);
-  domAPI.renderWeatherDOM(fetchedWeatherData, metric);
+  try {
+    const ip = await weatherAPI.fetchIPAddress(signal);
+    fetchedWeatherData = await weatherAPI.fetchForecastData(ip, signal);
+    
+    if(signal.aborted) return;
+    domAPI.renderWeatherDOM(fetchedWeatherData, metric);
+  } catch (error){
+    console.error(error);
+  }
 }
 
 async function onWeatherSearch(event) {
   if (event.keyCode !== 13) return;
+  if (!signal.aborted) controller.abort(); // When data is requested first time by ip in the onDOMLoaded and it hadn't reached site before a user entered the city , abort fetching to avoid rerendering data requested by ip
 
-  fetchedWeatherData = await weatherAPI.fetchForecastData(event.target.value);
-  domAPI.renderWeatherDOM(fetchedWeatherData, metric);
-  event.target.value = '';
+  try {
+    fetchedWeatherData = await weatherAPI.fetchForecastData(event.target.value);
+    domAPI.renderWeatherDOM(fetchedWeatherData, metric);
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 function changeMetric(event) {
@@ -40,3 +53,11 @@ function changeMetric(event) {
 }
 
 domAPI.init();
+
+searchWeatherInput.value = 'yaroslavl'
+searchWeatherInput.dispatchEvent(new KeyboardEvent('keydown', {
+  key: 'Enter',
+  keyCode: 13,
+  which: 13,
+  bubbles: true
+}))

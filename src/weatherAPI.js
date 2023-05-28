@@ -1,6 +1,6 @@
-async function fetchForecastData(city) {
+async function fetchForecastData(city, signal) {
   try {
-    const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=35cd943d20aa4b9c9f1202434230605&days=14&q=${city}`);
+    const response = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=35cd943d20aa4b9c9f1202434230605&days=14&q=${city}`, { signal });
     
     if(!response.ok) {
       throw new Error('Failed to fetch weather data: ' + + response.status)
@@ -13,9 +13,9 @@ async function fetchForecastData(city) {
   }
 }
 
-async function fetchIPAddress() {
+async function fetchIPAddress(signal) {
   try {
-    const response = await fetch(`https://api.ipify.org?format=json`);
+    const response = await fetch(`https://api.ipify.org?format=json`, { signal });
     
     if(!response.ok) {
       throw new Error('Failed to fetch ip data: ' + response.status)
