@@ -10,9 +10,16 @@ const searchWeatherInput = document.querySelector('.weather-search-input');
 const celsiusBtn = document.querySelector('.celsius-button');
 const fahrenheitBtn = document.querySelector('.fahrenheit-button');
 
+document.addEventListener('DOMContentLoaded', onDOMLoaded)
 searchWeatherInput.addEventListener('keydown', onWeatherSearch);
 celsiusBtn.addEventListener('click', changeMetric);
 fahrenheitBtn.addEventListener('click', changeMetric);
+
+async function onDOMLoaded() {
+  const ip = await weatherAPI.fetchIPAddress();
+  fetchedWeatherData = await weatherAPI.fetchForecastData(ip);
+  domAPI.renderWeatherDOM(fetchedWeatherData, metric);
+}
 
 async function onWeatherSearch(event) {
   if (event.keyCode !== 13) return;
