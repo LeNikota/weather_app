@@ -1,3 +1,3 @@
 # weather_app
 
-[Online preview]()
+[Online preview](https://lenikota.github.io/weather_app/)
