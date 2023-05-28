@@ -5,7 +5,7 @@ import * as weatherAPI from './weatherAPI'
 import * as domAPI from './domAPI'
 
 let metric = '°C';
-let fetchedWeatherData = null;
+let weatherData = null;
 const controller = new AbortController()
 const signal = controller.signal;
 
@@ -15,49 +15,45 @@ const fahrenheitBtn = document.querySelector('.fahrenheit-button');
 
 document.addEventListener('DOMContentLoaded', onDOMLoaded)
 searchWeatherInput.addEventListener('keydown', onWeatherSearch);
-celsiusBtn.addEventListener('click', changeMetric);
-fahrenheitBtn.addEventListener('click', changeMetric);
+celsiusBtn.addEventListener('click', onChangeMetric);
+fahrenheitBtn.addEventListener('click', onChangeMetric);
 
 async function onDOMLoaded() {
-  try {
-    const ip = await weatherAPI.fetchIPAddress(signal);
-    fetchedWeatherData = await weatherAPI.fetchForecastData(ip, signal);
-    
-    if(signal.aborted) return;
-    domAPI.renderWeatherDOM(fetchedWeatherData, metric);
-  } catch (error){
-    console.error(error);
+  const ip = await weatherAPI.fetchIPAddress(signal);
+  weatherData = await weatherAPI.fetchForecastData(ip.data, signal);
+
+  if (signal.aborted) return;
+  if (!weatherData.success) {
+    domAPI.displayError(weatherData.error);
+    return;
   }
+
+  domAPI.renderWeatherDOM(weatherData.data, metric);
 }
 
 async function onWeatherSearch(event) {
   if (event.keyCode !== 13) return;
   if (!signal.aborted) controller.abort(); // When data is requested first time by ip in the onDOMLoaded and it hadn't reached site before a user entered the city , abort fetching to avoid rerendering data requested by ip
+  domAPI.displayLoading();
+  weatherData = await weatherAPI.fetchForecastData(event.target.value);
 
-  try {
-    fetchedWeatherData = await weatherAPI.fetchForecastData(event.target.value);
-    domAPI.renderWeatherDOM(fetchedWeatherData, metric);
-  } catch (error) {
-    console.error(error);
+  if (!weatherData.success) {
+    domAPI.displayError(weatherData.error);
+    return;
   }
+
+  domAPI.renderWeatherDOM(weatherData.data, metric);
 }
 
-function changeMetric(event) {
+function onChangeMetric(event) {
   if(!event.target.classList.contains('outline')) return;
-
   metric = (celsiusBtn.classList.contains('outline')) ? '°C' : '°F';
-  domAPI.renderWeatherDOM(fetchedWeatherData, metric);
   
   celsiusBtn.classList.toggle('outline')
   fahrenheitBtn.classList.toggle('outline')
+
+  if(!weatherData.success) return;
+  domAPI.renderWeatherDOM(weatherData.data, metric);
 }
 
 domAPI.init();
-
-searchWeatherInput.value = 'yaroslavl'
-searchWeatherInput.dispatchEvent(new KeyboardEvent('keydown', {
-  key: 'Enter',
-  keyCode: 13,
-  which: 13,
-  bubbles: true
-}))

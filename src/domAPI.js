@@ -1,5 +1,7 @@
 import * as utility from './utility';
 
+let timeoutID = null;
+
 function hourlyForecastSliderControls() {
   const carouselContainer = document.querySelector(".hourly-forecast");
   const carousel = carouselContainer.querySelector(".hourly-forecast-carousel");
@@ -163,7 +165,37 @@ function clearWeatherDOM() {
   document.querySelector('.weather-forecast').innerHTML = '';
 }
 
+function displayWeatherSection() {
+  const weatherSection = document.querySelector('.weather');
+  const loadingSection = document.querySelector('.loading');
+
+  weatherSection.style.display = 'block';
+  loadingSection.style.display = 'none';
+}
+
+function displayLoading() {
+  const weatherSection = document.querySelector('.weather');
+  const loadingSection = document.querySelector('.loading');
+
+  weatherSection.style.display = 'none';
+  loadingSection.style.display = 'block';
+}
+
+function displayError(error) {
+  const loadingSection = document.querySelector('.loading');
+  const errorSection = document.querySelector('.error');
+  
+  errorSection.style.display = 'block'
+  loadingSection.style.display = 'none';
+  
+  errorSection.textContent = error;
+
+  if(timeoutID) clearTimeout(timeoutID);
+  timeoutID = setTimeout(() => errorSection.style.display = 'none', 3000)
+}
+
 function renderWeatherDOM(data, units) {
+  displayWeatherSection();
   clearWeatherDOM();
   displayCurrentWeather(data, units);
   displayCurrentWeatherHourlyForecast(data, units);
@@ -175,4 +207,4 @@ function init() {
   hourlyForecastSliderControls();
 }
 
-export { init, renderWeatherDOM };
+export { init,  displayLoading, displayError, renderWeatherDOM };
