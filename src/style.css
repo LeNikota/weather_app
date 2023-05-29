@@ -92,3 +92,19 @@
     align-items: center;
   }
 }
+
+
+
+
+body::-webkit-scrollbar {
+  width: 0.5rem;
+}
+ 
+body::-webkit-scrollbar-thumb {
+  background-color: var(--secondary);
+}
+
+body {
+  scrollbar-width: thin; 
+  scrollbar-color: var(--secondary) transparent;
+}
